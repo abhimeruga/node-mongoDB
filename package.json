@@ -1,0 +1,48 @@
+{
+  "name": "node_mongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "build:copy": "cpx \"src/**/*.yaml\" dist/ && cpx \"src/**/*.json\" dist/",
+    "start": "nodemon dist/index.js",
+    "start_old": "DEBUG=fes:* node dist/index.js",
+    "build:full": "npm run lint && tsc -p tsconfig.json && npm run build:copy",
+    "build:live": "npm run clean && npm run lint && tsc -p tsconfig.json && npm run build:copy",
+    "test:mocha": "nyc mocha -r ts-node/register test/src/**/*.ts --timeout 30000 --exit",
+    "lab-test": "node ./test/doNothing.js",
+    "pact": "node ./test/doNothing.js",
+    "pact-publish": "node ./test/doNothing.js",
+    "test:component": "node ./test/doNothing.js",
+    "test:integration": "mocha -r ts-node/register test/integration/**/*.ts --timeout 20000 --exit",
+    "pact-verify-stop": "node ./test/doNothing.js",
+    "test-mocha": "node ./test/doNothing.js",
+    "test:integration_org": "mocha -r ts-node/register test/integration/**/*.ts --timeout 20000 --exit",
+    "build:dev": "nodemon --exec ts-node -- ./src/index.ts",
+    "dev": "DEBUG=fes:* TS_NODE_CACHE=false npm run build:dev",
+    "lint": "tslint -p tsconfig.json",
+    "testOne": "TS_NODE_CACHE=false ./node_modules/.bin/mocha --compilers ts:ts-node/register ",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "watch-node": "nodemon dist/index.js"
+  },
+  "keywords": [],
+  "author": "Abhi Meruga",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.4.1",
+    "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.6",
+    "cpx": "^1.5.0",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  }
+}
